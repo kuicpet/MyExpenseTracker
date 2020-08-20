@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container } from 'reactstrap';
 import Form from './components/Form';
 import List from './components/List';
 
 
-const ALL_EXPENSES = [
-  { id: 1, name: 'Buy a Car', amount: 2000},
-  { id: 2, name: 'Buy a milk', amount: 5},
-  { id: 3, name: 'Book flight tickets', amount: 300},
-  { id: 4, name: 'Buy a Book', amount: 20}
-]
+const ALL_EXPENSES = localStorage.getItem('expenses') ? JSON.parse(localStorage.getItem('expenses')) : [];
 
 function App() {
   const [expenses, setExpenses] = useState(ALL_EXPENSES)
@@ -37,6 +32,15 @@ function App() {
       console.log('Invalid expense name or the amount')
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses))
+  }, [expenses]);
+
+  const handleClearExpenses = () => {
+    setExpenses([]);
+  }
+
   return (
     <Container className="text-center">
      <Jumbotron fluid>
@@ -57,6 +61,7 @@ function App() {
         handleName={handleName}
         handleAmount={handleAmount}
         handleSubmitForm={handleSubmitForm}
+        handleClearExpenses={handleClearExpenses}
        />
        <List expenses={expenses}/>
      </Jumbotron>

@@ -4,7 +4,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 
 const List = ({ expenses }) => (
     <div>
-        <ListGroup>
+        <ListGroup className="text-justify">
             {expenses.map(item => (
                 <ListGroupItem key={item.id}>
                     {item.name} - $ {item.amount}
